@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import emailjs from "@emailjs/browser";
 import { contractorMapping } from '../utils/contractorData';
 import './delSupForm.css';
 
 const DelSupForm = ({ navigate }) => {
+
   const [formData, setFormData] = useState({
     delSupPoint: '',
     demandCategory: '',
@@ -42,252 +44,309 @@ const DelSupForm = ({ navigate }) => {
   });
 
   const delSupPoints = [
-    'Sup P Khanabal', 'Sup P Awantipur', 'Sup P Wuzur', 'Del P 08 FBSU (AF)',
-    'Sup P Balapur', 'Sup P Budgam', 'Del P Aishmaquam', 'Sup P Khundru',
-    'Del P Bihibagh', 'Del P Tral'
+    'Sup P Khanabal','Sup P Awantipur','Sup P Wuzur','Del P 08 FBSU (AF)',
+    'Sup P Balapur','Sup P Budgam','Del P Aishmaquam','Sup P Khundru',
+    'Del P Bihibagh','Del P Tral'
   ];
 
   const demandCategories = [
-    'Meat Dsd Fzn', 'Chicken Dsd Fzn', 'Broiler Alive', 'Egg Fresh ',
-    'Veg', 'Fruit', 'POG', 'Bread White', 'Bread Wheatmeal',
-    'Milk Fresh ', 'Butter Fresh', 'MAP Milk'
+    'Meat Dsd Fzn','Chicken Dsd Fzn','Broiler Alive','Egg Fresh ',
+    'Veg','Fruit','POG','Bread White','Bread Wheatmeal',
+    'Milk Fresh ','Butter Fresh','MAP Milk'
   ];
 
-  // Effect to automatically fill Contractor and Deed Number
   useEffect(() => {
+
     if (formData.delSupPoint && formData.demandCategory) {
-      // Find matching entry in our mapping file
+
       const categoryData = contractorMapping[formData.demandCategory];
+
       if (categoryData && categoryData[formData.delSupPoint]) {
+
         const { firm, deed } = categoryData[formData.delSupPoint];
+
         setFormData(prev => ({
           ...prev,
           contractorFirm: firm || 'No Contractor Found',
           contractDeedNo: deed || ''
         }));
+
       } else {
+
         setFormData(prev => ({
           ...prev,
           contractorFirm: 'No Contractor Found',
           contractDeedNo: ''
         }));
+
       }
+
     }
+
   }, [formData.delSupPoint, formData.demandCategory]);
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
   };
 
   const handleVegChange = (id, field, value) => {
-    setVegetableData(prev => prev.map(veg =>
-      veg.id === id ? { ...veg, [field]: value } : veg
-    ));
+
+    setVegetableData(prev =>
+      prev.map(v =>
+        v.id === id ? { ...v, [field]: value } : v
+      )
+    );
+
   };
 
   const handleFruitChange = (id, field, value) => {
-    setFruitData(prev => prev.map(fruit =>
-      fruit.id === id ? { ...fruit, [field]: value } : fruit
-    ));
+
+    setFruitData(prev =>
+      prev.map(f =>
+        f.id === id ? { ...f, [field]: value } : f
+      )
+    );
+
   };
 
-  const sendEmailSmtp = async (details, demands) => {
+  const sendEmail = async (details, demands) => {
 
-    console.log("*************************************************");
-    // Load SMTP.js dynamically
-    if (!window.Email) {
-      await new Promise((resolve) => {
-        const script = document.createElement("script");
-        script.src = "https://smtpjs.com/v3/smtp.js";
-        script.onload = resolve;
-        document.head.appendChild(script);
-      });
-    }
-    console.log("resolverd 1")
+    const demandListText =
+      demands && demands.length > 0
+        ? demands.map(d => `${d.name}: ${d.quantityDemand} ${d.unit}`).join('\n')
+        : 'No items selected';
 
-    // Format the demands into a readable string
-    const demandListText = demands && demands.length > 0
-      ? demands.map(d => `- ${d.name}: ${d.quantityDemand} ${d.unit}`).join('\n')
-      : 'No items selected';
-
-    const emailBody = `
-      New Supply Indent Initiated:
-      ---------------------------------
-      Del/Sup Point: ${details.delSupPoint}
-      Category: ${details.demandCategory}
-      Contractor Firm: ${details.contractorFirm}
-      Deed No: ${details.contractDeedNo}
-      Demand Date: ${details.demandDateTime}
-      Delivery Date: ${details.deliveryDateTime}
-      
-      Selected Requirements:
-      ${demandListText}
-
-      Additional Notes:
-      ${details.note || 'None'}
-    `;
+    const templateParams = {
+      delSupPoint: details.delSupPoint,
+      demandCategory: details.demandCategory,
+      contractorFirm: details.contractorFirm,
+      contractDeedNo: details.contractDeedNo,
+      demandDateTime: details.demandDateTime,
+      deliveryDateTime: details.deliveryDateTime,
+      items: demandListText,
+      note: details.note || 'None'
+    };
 
     try {
-      /* 
-       * SMTP.js Implementation 
-       * REPLACE the placeholders below with your actual SMTP credentials or SecureToken
-       * Example using Host/Username/Password:
-       */
-      console.log('Attempting to send SMTP email with body:\n', emailBody);
 
-      // Simulate network delay for the UI (remove this when you add real credentials below)
-      await new Promise(res => setTimeout(res, 1500));
-
-      //UNCOMMENT AND ADD CREDENTIALS TO ACTUAL SEND:
-      const result = await window.Email.send({
-        Host: "smtp.gmail.com",
-        Username: "sheikh.umaid03@gmail.com",
-        Password: "bhdz toet fwbw wzjp",
-        To: 'demandsupply586@gmail.com',
-        From: "sheikh.umaid03@gmail.com",
-        Subject: `New ${details.demandCategory} Indent from ${details.delSupPoint}`,
-        Body: emailBody.replace(/\n/g, '<br>')
-      });
-
-
-      console.log("resolverd 1.5", result)
-
-      if (result !== "OK") {
-        console.error("SMTPJS failed to send:", result);
-        alert("Failed to send email. Check console for details. Error: " + result);
-        return false;
-      }
-      console.log("resolverd 2")
+      await emailjs.send(
+        "service_vpwvmyu",
+        "template_3v2fmoz",
+        templateParams,
+        "Z_xATKuNDtphjuIm8"
+      );
 
       return true;
-    } catch (error) {
-      console.error("Failed to send email:", error);
+
+    } catch (err) {
+
+      console.error("Email send error:", err);
       return false;
+
     }
+
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     setIsSending(true);
 
     let requiredDemands = [];
+
     if (formData.demandCategory === 'Veg') {
       requiredDemands = vegetableData.filter(v => v.selected);
-    } else if (formData.demandCategory === 'Fruit') {
+    } 
+    else if (formData.demandCategory === 'Fruit') {
       requiredDemands = fruitData.filter(f => f.selected);
-    } else if (formData.demandCategory && singleItemData.selected) {
+    } 
+    else if (formData.demandCategory && singleItemData.selected) {
       requiredDemands = [{ name: formData.demandCategory, ...singleItemData }];
     }
 
-    console.log('Submitting Form data:', formData);
-    console.log('With requirements:', requiredDemands);
-
-    // Fire Email via SMTP
-    await sendEmailSmtp(formData, requiredDemands);
+    const success = await sendEmail(formData, requiredDemands);
 
     setIsSending(false);
-    setIsSubmitted(true);
+
+    if (success) {
+      setIsSubmitted(true);
+    } else {
+      alert("Email failed to send");
+    }
+
   };
 
   if (isSubmitted) {
+
     return (
+
       <div className="formContainer">
+
         <div className="successCard">
+
           <div className="successIcon">✓</div>
-          <h1 className="successTitle">Request Submitted Successfully</h1>
+
+          <h1 className="successTitle">
+            Request Submitted Successfully
+          </h1>
+
           <p className="successSubtitle">
-            Your supply indent for <strong>{formData.demandCategory}</strong> at <strong>{formData.delSupPoint}</strong> has been processed and your designated email was fired via SMTP.
+            Your supply indent for <strong>{formData.demandCategory}</strong> at <strong>{formData.delSupPoint}</strong> has been processed.
           </p>
+
           <div className="successActions">
+
             <button
               className="btnPrimary"
-              onClick={() => {
-                // reset form perfectly
-                setFormData(prev => ({ ...prev, demandDateTime: '', deliveryDateTime: '', note: '' }));
-                setIsSubmitted(false);
-              }}
+              onClick={() => setIsSubmitted(false)}
             >
               Submit Another Request
             </button>
-            <button className="btnSecondary" onClick={() => navigate('demandSelection')}>
+
+            <button
+              className="btnSecondary"
+              onClick={() => navigate('demandSelection')}
+            >
               Back to Dashboard
             </button>
+
           </div>
+
         </div>
+
       </div>
+
     );
+
   }
 
   return (
+
     <div className="formContainer">
+
       <div className="formHeader">
-        <button type="button" className="formBackBtn" onClick={() => navigate('demandSelection')}>
+
+        <button
+          type="button"
+          className="formBackBtn"
+          onClick={() => navigate('demandSelection')}
+        >
           &larr; Back
         </button>
+
         <h1 className="formTitle">Initiate Supply Indent</h1>
-        <p className="formSubtitle">Fill out the supply parameters to initiate a formal rations indent</p>
+
+        <p className="formSubtitle">
+          Fill out the supply parameters to initiate a formal rations indent
+        </p>
+
       </div>
 
       <div className="formCard">
+
         <form onSubmit={handleSubmit}>
 
+          {/* General Info */}
+
           <div className="formSection">
+
             <h2 className="sectionTitle">General Info</h2>
+
             <div className="formGrid">
+
               <div className="formGroup">
                 <label className="formLabel">Del/Sup Point</label>
-                <select name="delSupPoint" className="formInput" value={formData.delSupPoint} onChange={handleChange} required>
-                  <option value="" disabled>Select point...</option>
+
+                <select
+                  name="delSupPoint"
+                  className="formInput"
+                  value={formData.delSupPoint}
+                  onChange={handleChange}
+                  required
+                >
+
+                  <option value="">Select point...</option>
+
                   {delSupPoints.map(point => (
                     <option key={point} value={point}>{point}</option>
                   ))}
+
                 </select>
               </div>
 
               <div className="formGroup">
+
                 <label className="formLabel">Demand Category</label>
-                <select name="demandCategory" className="formInput" value={formData.demandCategory} onChange={handleChange} required>
-                  <option value="" disabled>Select category...</option>
+
+                <select
+                  name="demandCategory"
+                  className="formInput"
+                  value={formData.demandCategory}
+                  onChange={handleChange}
+                  required
+                >
+
+                  <option value="">Select category...</option>
+
                   {demandCategories.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))}
+
                 </select>
+
               </div>
 
               <div className="formGroup">
+
                 <label className="formLabel">Authorized Farmer/Contractor</label>
+
                 <input
                   type="text"
                   name="contractorFirm"
                   className="formInput"
-                  style={{ backgroundColor: '#f8fafc', color: '#475569' }}
                   value={formData.contractorFirm}
                   readOnly
-                  placeholder="Auto-filled based on selection"
                 />
+
               </div>
 
               <div className="formGroup">
+
                 <label className="formLabel">Contact Deed No.</label>
+
                 <input
                   type="text"
                   name="contractDeedNo"
                   className="formInput"
-                  style={{ backgroundColor: '#f8fafc', color: '#475569' }}
                   value={formData.contractDeedNo}
                   readOnly
-                  placeholder="Auto-filled based on selection"
                 />
+
               </div>
+
             </div>
+
           </div>
 
+          {/* Scheduling */}
+
           <div className="formSection">
+
             <h2 className="sectionTitle">Scheduling</h2>
+
             <div className="formGrid">
+
               <div className="formGroup">
+
                 <label className="formLabel">Indent Date & Time</label>
+
                 <input
                   type="datetime-local"
                   name="demandDateTime"
@@ -296,10 +355,13 @@ const DelSupForm = ({ navigate }) => {
                   onChange={handleChange}
                   required
                 />
+
               </div>
 
               <div className="formGroup">
+
                 <label className="formLabel">Delivery Date & Time</label>
+
                 <input
                   type="datetime-local"
                   name="deliveryDateTime"
@@ -308,141 +370,19 @@ const DelSupForm = ({ navigate }) => {
                   onChange={handleChange}
                   required
                 />
+
               </div>
+
             </div>
+
           </div>
 
-          {/* VARIOUS CATEGORY TABLES */}
-          {formData.demandCategory && (
-            <div className="formSection">
-              <div className="sectionHeader">
-                <h2 className="sectionTitle">{formData.demandCategory} Requisition</h2>
-                <span className="sectionBadge">Selection</span>
-              </div>
-              <div className="tableWrapper">
-                <table className="itemsTable">
-                  <thead>
-                    <tr>
-                      <th width="80" align="center">Include</th>
-                      <th width="80" align="center">S.No</th>
-                      <th>Item Name</th>
-                      <th width="140" align="right">Quantity</th>
-                      <th width="140" align="right">Indent Qty</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* General Category */}
-                    {formData.demandCategory !== 'Veg' && formData.demandCategory !== 'Fruit' && (
-                      <tr className={singleItemData.selected ? 'rowSelected' : ''}>
-                        <td align="center">
-                          <input
-                            type="checkbox"
-                            className="formCheckbox"
-                            checked={singleItemData.selected}
-                            onChange={(e) => setSingleItemData(prev => ({ ...prev, selected: e.target.checked }))}
-                          />
-                        </td>
-                        <td align="center">1</td>
-                        <td className="itemName">{formData.demandCategory}</td>
-                        <td align="right">
-                          <select
-                            className="unitSelect"
-                            value={singleItemData.unit}
-                            disabled={!singleItemData.selected}
-                            onChange={(e) => setSingleItemData(prev => ({ ...prev, unit: e.target.value }))}
-                            style={{ border: '1px solid #cbd5e1', borderRadius: '6px', width: '80px' }}
-                          >
-                            <option value="kg">/ kg</option>
-                            <option value="g">/ g</option>
-                            <option value="L">/ L</option>
-                            <option value="pcs">/ pcs</option>
-                          </select>
-                        </td>
-                        <td align="right">
-                          <input
-                            type="number"
-                            className="qtyInput reqInput"
-                            placeholder="0"
-                            value={singleItemData.quantityDemand}
-                            disabled={!singleItemData.selected}
-                            onChange={(e) => setSingleItemData(prev => ({ ...prev, quantityDemand: e.target.value }))}
-                            required={singleItemData.selected}
-                          />
-                        </td>
-                      </tr>
-                    )}
-
-                    {/* Vegetable Category */}
-                    {formData.demandCategory === 'Veg' && vegetableData.map((veg, index) => (
-                      <tr key={veg.id} className={veg.selected ? 'rowSelected' : ''}>
-                        <td align="center">
-                          <input
-                            type="checkbox"
-                            className="formCheckbox"
-                            checked={veg.selected}
-                            onChange={(e) => handleVegChange(veg.id, 'selected', e.target.checked)}
-                          />
-                        </td>
-                        <td align="center">{index + 1}</td>
-                        <td className="itemName">{veg.name}</td>
-                        <td align="right">
-                          <span style={{ color: veg.selected ? '#475569' : '#cbd5e1', fontWeight: '500', display: 'inline-block', padding: '0.5rem 1rem' }}>
-                            / kg
-                          </span>
-                        </td>
-                        <td align="right">
-                          <input
-                            type="number"
-                            className="qtyInput reqInput"
-                            placeholder="0"
-                            value={veg.quantityDemand}
-                            disabled={!veg.selected}
-                            onChange={(e) => handleVegChange(veg.id, 'quantityDemand', e.target.value)}
-                            required={veg.selected}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-
-                    {/* Fruit Category */}
-                    {formData.demandCategory === 'Fruit' && fruitData.map((fruit, index) => (
-                      <tr key={fruit.id} className={fruit.selected ? 'rowSelected' : ''}>
-                        <td align="center">
-                          <input
-                            type="checkbox"
-                            className="formCheckbox"
-                            checked={fruit.selected}
-                            onChange={(e) => handleFruitChange(fruit.id, 'selected', e.target.checked)}
-                          />
-                        </td>
-                        <td align="center">{index + 1}</td>
-                        <td className="itemName">{fruit.name}</td>
-                        <td align="right">
-                          <span style={{ color: fruit.selected ? '#475569' : '#cbd5e1', fontWeight: '500', display: 'inline-block', padding: '0.5rem 1rem' }}>
-                            / kg
-                          </span>
-                        </td>
-                        <td align="right">
-                          <input
-                            type="number"
-                            className="qtyInput reqInput"
-                            placeholder="0"
-                            value={fruit.quantityDemand}
-                            disabled={!fruit.selected}
-                            onChange={(e) => handleFruitChange(fruit.id, 'quantityDemand', e.target.value)}
-                            required={fruit.selected}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+          {/* Notes */}
 
           <div className="formSection flex-col">
-            <h2 className="sectionTitle">XXXXXXXX XXXXXXXX</h2>
+
+            <h2 className="sectionTitle">Additional Notes</h2>
+
             <textarea
               name="note"
               className="formTextarea"
@@ -451,17 +391,29 @@ const DelSupForm = ({ navigate }) => {
               onChange={handleChange}
               rows={3}
             ></textarea>
+
           </div>
 
           <div className="formActions">
-            <button type="submit" className="formSubmitBtn" disabled={isSending}>
-              {isSending ? 'Sending Indent & Email...' : 'Submit Indent'}
+
+            <button
+              type="submit"
+              className="formSubmitBtn"
+              disabled={isSending}
+            >
+              {isSending ? "Sending Indent..." : "Submit Indent"}
             </button>
+
           </div>
+
         </form>
+
       </div>
+
     </div>
+
   );
+
 };
 
 export default DelSupForm;
