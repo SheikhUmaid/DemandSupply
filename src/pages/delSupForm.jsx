@@ -104,7 +104,7 @@ const DelSupForm = ({ navigate }) => {
     }
 
     // Format the demands into a readable string
-    const demandListText = demands && demands.length > 0 
+    const demandListText = demands && demands.length > 0
       ? demands.map(d => `- ${d.name}: ${d.quantityDemand} ${d.unit}`).join('\n')
       : 'No items selected';
 
@@ -132,21 +132,27 @@ const DelSupForm = ({ navigate }) => {
        * Example using Host/Username/Password:
        */
       console.log('Attempting to send SMTP email with body:\n', emailBody);
-      
-      // Simulate network delay for the UI (remove this when you add real credentials below)
-      await new Promise(res => setTimeout(res, 1500)); 
 
-      /* UNCOMMENT AND ADD CREDENTIALS TO ACTUAL SEND:
-      await window.Email.send({
-        Host: "smtp.your-server.com",
-        Username: "username@your-domain.com",
-        Password: "your-password",
-        To: 'admin@zinth.com',
-        From: "system@zinth.com",
+      // Simulate network delay for the UI (remove this when you add real credentials below)
+      await new Promise(res => setTimeout(res, 1500));
+
+      //UNCOMMENT AND ADD CREDENTIALS TO ACTUAL SEND:
+      const result = await window.Email.send({
+        Host: "smtp.gmail.com",
+        Username: "sheikh.umaid03@gmail.com",
+        Password: "bhdz toet fwbw wzjp",
+        To: 'demandsupply586@gmail.com',
+        From: "sheikh.umaid03@gmail.com",
         Subject: `New ${details.demandCategory} Indent from ${details.delSupPoint}`,
         Body: emailBody.replace(/\n/g, '<br>')
       });
-      */
+
+      if (result !== "OK") {
+        console.error("SMTPJS failed to send:", result);
+        alert("Failed to send email. Check console for details. Error: " + result);
+        return false;
+      }
+
       return true;
     } catch (error) {
       console.error("Failed to send email:", error);
@@ -187,11 +193,11 @@ const DelSupForm = ({ navigate }) => {
             Your supply indent for <strong>{formData.demandCategory}</strong> at <strong>{formData.delSupPoint}</strong> has been processed and your designated email was fired via SMTP.
           </p>
           <div className="successActions">
-            <button 
-              className="btnPrimary" 
+            <button
+              className="btnPrimary"
               onClick={() => {
                 // reset form perfectly
-                setFormData(prev => ({...prev, demandDateTime: '', deliveryDateTime: '', note: ''}));
+                setFormData(prev => ({ ...prev, demandDateTime: '', deliveryDateTime: '', note: '' }));
                 setIsSubmitted(false);
               }}
             >
