@@ -1,0 +1,122 @@
+.container {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  margin: 0 0 3.5rem 0;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cardBtn {
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+  min-height: 220px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2.5rem 2rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+.cardBtn:active {
+  transform: scale(0.97);
+}
+
+.demandBtn {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 2px solid transparent;
+}
+
+.demandBtn:hover {
+  border-color: #e2e8f0;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-8px);
+}
+
+.reBtn {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 2px solid transparent;
+}
+
+.reBtn:hover {
+  background-color: #1e293b;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.2), 0 10px 10px -5px rgba(15, 23, 42, 0.1);
+  transform: translateY(-8px);
+}
+
+.btnContent h2 {
+  font-size: 2.25rem;
+  margin: 0 0 0.75rem 0;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.btnContent p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.reBtn .btnContent p {
+  color: #cbd5e1;
+}
+
+.demandBtn .btnContent p {
+  color: #64748b;
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  .cardBtn {
+    width: 100%;
+    max-width: 100%;
+    min-height: 180px;
+  }
+  .buttonContainer {
+    gap: 1.5rem;
+  }
+}

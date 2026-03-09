@@ -1,0 +1,79 @@
+.container {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 3.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  max-width: 480px;
+  width: 100%;
+}
+
+.iconWrapper {
+  width: 80px;
+  height: 80px;
+  background-color: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+  color: #0f172a;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+  margin: 0 0 2.5rem 0;
+  line-height: 1.6;
+}
+
+.backBtn {
+  padding: 0.875rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  background-color: transparent;
+  border: 2px solid #0f172a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.backBtn:hover {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.backBtn:active {
+  transform: scale(0.98);
+}
