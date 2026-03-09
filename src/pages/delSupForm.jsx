@@ -109,7 +109,7 @@ const DelSupForm = ({ navigate }) => {
       : 'No items selected';
 
     const emailBody = `
-      New Demand Request Initiated:
+      New Supply Indent Initiated:
       ---------------------------------
       Del/Sup Point: ${details.delSupPoint}
       Category: ${details.demandCategory}
@@ -143,7 +143,7 @@ const DelSupForm = ({ navigate }) => {
         Password: "your-password",
         To: 'admin@zinth.com',
         From: "system@zinth.com",
-        Subject: `New ${details.demandCategory} Demand from ${details.delSupPoint}`,
+        Subject: `New ${details.demandCategory} Indent from ${details.delSupPoint}`,
         Body: emailBody.replace(/\n/g, '<br>')
       });
       */
@@ -184,7 +184,7 @@ const DelSupForm = ({ navigate }) => {
           <div className="successIcon">✓</div>
           <h1 className="successTitle">Request Submitted Successfully</h1>
           <p className="successSubtitle">
-            Your demand request for <strong>{formData.demandCategory}</strong> at <strong>{formData.delSupPoint}</strong> has been processed and your designated email was fired via SMTP.
+            Your supply indent for <strong>{formData.demandCategory}</strong> at <strong>{formData.delSupPoint}</strong> has been processed and your designated email was fired via SMTP.
           </p>
           <div className="successActions">
             <button 
@@ -212,8 +212,8 @@ const DelSupForm = ({ navigate }) => {
         <button type="button" className="formBackBtn" onClick={() => navigate('demandSelection')}>
           &larr; Back
         </button>
-        <h1 className="formTitle">Create Demand Request</h1>
-        <p className="formSubtitle">Fill out the supply parameters to initiate a formal demand</p>
+        <h1 className="formTitle">Initiate Supply Indent</h1>
+        <p className="formSubtitle">Fill out the supply parameters to initiate a formal rations indent</p>
       </div>
 
       <div className="formCard">
@@ -243,7 +243,7 @@ const DelSupForm = ({ navigate }) => {
               </div>
 
               <div className="formGroup">
-                <label className="formLabel">Contractor/Firm</label>
+                <label className="formLabel">Authorized Farmer/Contractor</label>
                 <input
                   type="text"
                   name="contractorFirm"
@@ -274,7 +274,7 @@ const DelSupForm = ({ navigate }) => {
             <h2 className="sectionTitle">Scheduling</h2>
             <div className="formGrid">
               <div className="formGroup">
-                <label className="formLabel">Demand Date & Time</label>
+                <label className="formLabel">Indent Date & Time</label>
                 <input
                   type="datetime-local"
                   name="demandDateTime"
@@ -303,7 +303,7 @@ const DelSupForm = ({ navigate }) => {
           {formData.demandCategory && (
             <div className="formSection">
               <div className="sectionHeader">
-                <h2 className="sectionTitle">{formData.demandCategory} Requirements</h2>
+                <h2 className="sectionTitle">{formData.demandCategory} Requisition</h2>
                 <span className="sectionBadge">Selection</span>
               </div>
               <div className="tableWrapper">
@@ -314,7 +314,7 @@ const DelSupForm = ({ navigate }) => {
                       <th width="80" align="center">S.No</th>
                       <th>Item Name</th>
                       <th width="140" align="right">Quantity</th>
-                      <th width="140" align="right">Qty Demand</th>
+                      <th width="140" align="right">Indent Qty</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -442,7 +442,7 @@ const DelSupForm = ({ navigate }) => {
 
           <div className="formActions">
             <button type="submit" className="formSubmitBtn" disabled={isSending}>
-              {isSending ? 'Sending Request & Email...' : 'Submit Request'}
+              {isSending ? 'Sending Indent & Email...' : 'Submit Indent'}
             </button>
           </div>
         </form>

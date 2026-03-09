@@ -4,7 +4,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f8fafc;
+  background-color: #f1f1e6;
+  background-image: linear-gradient(to bottom, rgba(241, 241, 230, 0.7), rgba(241, 241, 230, 0.95)), url('https://images.unsplash.com/photo-1595856340542-fa326cd6bc8b?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   padding: 1.5rem;
   box-sizing: border-box;
@@ -64,25 +67,33 @@
 
 .demandBtn {
   background-color: #ffffff;
+  background-image: linear-gradient(to bottom, rgba(244, 247, 240, 0.85), rgba(244, 247, 240, 0.98)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80');
+  background-size: cover;
+  background-position: center;
   color: #0f172a;
   border: 2px solid transparent;
 }
 
 .demandBtn:hover {
+  background-image: linear-gradient(to bottom, rgba(244, 247, 240, 0.75), rgba(244, 247, 240, 0.95)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80');
   border-color: #e2e8f0;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   transform: translateY(-8px);
 }
 
 .reBtn {
-  background-color: #0f172a;
+  background-color: #2e4521;
+  background-image: linear-gradient(to bottom, rgba(46, 69, 33, 0.85), rgba(46, 69, 33, 0.98)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80');
+  background-size: cover;
+  background-position: center;
   color: #ffffff;
   border: 2px solid transparent;
 }
 
 .reBtn:hover {
-  background-color: #1e293b;
-  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.2), 0 10px 10px -5px rgba(15, 23, 42, 0.1);
+  background-image: linear-gradient(to bottom, rgba(46, 69, 33, 0.75), rgba(46, 69, 33, 0.95)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80');
+  background-color: #1c2612;
+  box-shadow: 0 20px 25px -5px rgba(46, 69, 33, 0.2), 0 10px 10px -5px rgba(46, 69, 33, 0.1);
   transform: translateY(-8px);
 }
 
@@ -104,7 +115,7 @@
 }
 
 .demandBtn .btnContent p {
-  color: #64748b;
+  color: #4b5320;
 }
 
 @media (max-width: 640px) {

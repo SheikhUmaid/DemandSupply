@@ -2,7 +2,11 @@
 .formContainer {
   min-height: 100vh;
   width: 100vw;
-  background-color: #f1f5f9;
+  background-color: #f1f1e6;
+  background-image: linear-gradient(to bottom, rgba(241, 241, 230, 0.65), rgba(241, 241, 230, 1)), url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1920&q=80');
+  background-size: 100% 400px;
+  background-repeat: no-repeat;
+  background-position: top center;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: #0f172a;
   position: absolute;
@@ -105,8 +109,8 @@
 }
 
 .sectionBadge {
-  background-color: #dbeafe;
-  color: #1d4ed8;
+  background-color: #dcfce7;
+  color: #2e4521;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.25rem 0.6rem;
@@ -149,8 +153,8 @@
 }
 
 .formInput:focus, .formTextarea:focus, .qtyInput:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: #658234;
+  box-shadow: 0 0 0 3px rgba(101, 130, 52, 0.15);
 }
 
 .formTextarea {
@@ -191,14 +195,14 @@
 }
 
 .rowSelected td {
-  background-color: #eff6ff;
+  background-color: #f4f7f0;
 }
 
 .formCheckbox {
   height: 1.1rem;
   width: 1.1rem;
   border-radius: 4px;
-  accent-color: #2563eb;
+  accent-color: #4b5320;
   cursor: pointer;
   margin: 0;
 }
@@ -223,8 +227,8 @@
 }
 
 .qtyGroup:focus-within {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: #658234;
+  box-shadow: 0 0 0 3px rgba(101, 130, 52, 0.15);
 }
 
 .qtyInput {
@@ -244,8 +248,8 @@
 }
 
 .qtyInput.reqInput:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: #658234;
+  box-shadow: 0 0 0 3px rgba(101, 130, 52, 0.15);
 }
 
 .unitSelect {
@@ -317,7 +321,7 @@
 }
 
 .btnPrimary {
-  background-color: #3b82f6;
+  background-color: #4b5320;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -329,7 +333,7 @@
 }
 
 .btnPrimary:hover {
-  background-color: #2563eb;
+  background-color: #2e4521;
 }
 
 .btnSecondary {
@@ -359,7 +363,7 @@
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: #0f172a;
+  background-color: #2e4521;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -369,7 +373,7 @@
 }
 
 .formSubmitBtn:hover {
-  background-color: #1e293b;
+  background-color: #1c2612;
   transform: translateY(-1px);
 }
 

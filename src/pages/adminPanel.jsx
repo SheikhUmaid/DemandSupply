@@ -8,7 +8,7 @@ const AdminPanel = ({ navigate }) => {
   return (
     <div className={styles.container}>
       <div className={styles.sidebar}>
-        <div className={styles.logo}>Zinth Admin</div>
+        <div className={styles.logo}>Command HQ</div>
         <div className={`${styles.menuItem} ${styles.active}`}>Dashboard</div>
         <div className={styles.menuItem}>Analytics</div>
         <div className={styles.menuItem}>Reports</div>
@@ -23,7 +23,7 @@ const AdminPanel = ({ navigate }) => {
 
       <div className={styles.main}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Dashboard overview</h1>
+          <h1 className={styles.title}>HQ Dashboard Overview</h1>
           <button className={styles.backBtn} onClick={() => navigate('demandSelection')}>
             Switch Portal
           </button>

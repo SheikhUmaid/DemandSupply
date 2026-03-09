@@ -37,9 +37,9 @@ const Authentication = ({ navigate }) => {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Welcome back</h1>
+          <h1 className={styles.title}>Kisan Veer Supply Portal</h1>
           <p className={styles.subtitle}>
-            Please enter your details to sign in.
+            Authorized Military & Farmer Contractor Access
           </p>
           <p className={styles.demoTip}>
             Demo credentials: <strong>admin</strong> / <strong>admin</strong>

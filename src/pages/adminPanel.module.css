@@ -1,7 +1,7 @@
 .container {
   min-height: 100vh;
   width: 100vw;
-  background-color: #f8fafc;
+  background-color: #f1f1e6;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: #0f172a;
   position: absolute;
@@ -12,7 +12,7 @@
 
 .sidebar {
   width: 260px;
-  background-color: #0f172a;
+  background-color: #1c2612;
   color: #ffffff;
   padding: 2rem 1.5rem;
   display: flex;
@@ -40,12 +40,12 @@
 }
 
 .menuItem.active {
-  background-color: #1e293b;
+  background-color: #2e4521;
   color: #ffffff;
 }
 
 .menuItem:hover:not(.active) {
-  background-color: #1e293b;
+  background-color: #2e4521;
   color: #f1f5f9;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .backBtn:hover {
-  background-color: #f1f5f9;
+  background-color: #f4f7f0;
 }
 
 .grid {
@@ -124,12 +124,12 @@
 
 .bar {
   flex: 1;
-  background-color: #3b82f6;
+  background-color: #4b5320;
   border-radius: 4px 4px 0 0;
   transition: height 0.3s ease;
   min-width: 20px;
 }
 
 .bar:nth-child(even) {
-  background-color: #93c5fd;
+  background-color: #8c9e5e;
 }
