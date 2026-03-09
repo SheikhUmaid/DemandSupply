@@ -93,6 +93,8 @@ const DelSupForm = ({ navigate }) => {
   };
 
   const sendEmailSmtp = async (details, demands) => {
+
+    console.log("*************************************************");
     // Load SMTP.js dynamically
     if (!window.Email) {
       await new Promise((resolve) => {
@@ -102,6 +104,7 @@ const DelSupForm = ({ navigate }) => {
         document.head.appendChild(script);
       });
     }
+    console.log("resolverd 1")
 
     // Format the demands into a readable string
     const demandListText = demands && demands.length > 0
@@ -147,11 +150,15 @@ const DelSupForm = ({ navigate }) => {
         Body: emailBody.replace(/\n/g, '<br>')
       });
 
+
+      console.log("resolverd 1.5", result)
+
       if (result !== "OK") {
         console.error("SMTPJS failed to send:", result);
         alert("Failed to send email. Check console for details. Error: " + result);
         return false;
       }
+      console.log("resolverd 2")
 
       return true;
     } catch (error) {
