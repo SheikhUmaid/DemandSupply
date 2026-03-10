@@ -37,7 +37,7 @@ const Authentication = ({ navigate }) => {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Army <Demand></Demand> Supply Portal</h1>
+          <h1 className={styles.title}>Army Demand Supply Portal</h1>
           <p className={styles.subtitle}>
             Authorized Military & Farmer Contractor Access
           </p>
