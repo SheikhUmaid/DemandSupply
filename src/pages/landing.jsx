@@ -5,7 +5,7 @@ const Landing = ({ navigate }) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h1 className={styles.title}>Kisan Veer System</h1>
+        <h1 className={styles.title}>Army Demand System</h1>
         <p className={styles.subtitle}>Indian Army Rations & Agriculture Portal</p>
 
         <div className={styles.buttonContainer}>

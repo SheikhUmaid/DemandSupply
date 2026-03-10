@@ -12,7 +12,11 @@ const DelSupForm = ({ navigate }) => {
     contractDeedNo: '',
     demandDateTime: '',
     deliveryDateTime: '',
-    note: ''
+    note: '',
+    note1: '',
+    note2: '',
+    note3: '',
+    note4: ''
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -131,7 +135,7 @@ const DelSupForm = ({ navigate }) => {
       demandDateTime: details.demandDateTime,
       deliveryDateTime: details.deliveryDateTime,
       items: demandListText,
-      note: details.note || 'None'
+      note: [details.note, details.note1, details.note2, details.note3, details.note4].filter(Boolean).join(' | ') || 'None'
     };
 
     try {
@@ -335,6 +339,177 @@ const DelSupForm = ({ navigate }) => {
 
           </div>
 
+          {/* Demand Details */}
+
+          {formData.demandCategory && (
+            <div className="formSection">
+              <h2 className="sectionTitle">Demand Details</h2>
+              <div className="tableWrapper">
+                {formData.demandCategory === 'Veg' ? (
+                  <table className="itemsTable">
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>Item Name</th>
+                        <th style={{ textAlign: 'right' }}>Quantity</th>
+                        <th style={{ textAlign: 'right' }}>Unit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {vegetableData.map(veg => (
+                        <tr key={veg.id} className={veg.selected ? "rowSelected" : ""}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              className="formCheckbox"
+                              checked={veg.selected}
+                              onChange={(e) => handleVegChange(veg.id, 'selected', e.target.checked)}
+                            />
+                          </td>
+                          <td className="itemName">{veg.name}</td>
+                          <td style={{ textAlign: 'right' }}>
+                            <input
+                              type="number"
+                              className={`formInput ${veg.selected ? 'reqInput' : ''}`}
+                              style={{ width: '100px', padding: '0.5rem', display: 'inline-block' }}
+                              value={veg.quantityDemand}
+                              onChange={(e) => handleVegChange(veg.id, 'quantityDemand', e.target.value)}
+                              disabled={!veg.selected}
+                              placeholder="0"
+                              required={veg.selected}
+                              min="0.01"
+                              step="any"
+                            />
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <select 
+                              className="formInput"
+                              style={{ width: '80px', padding: '0.5rem', display: 'inline-block' }}
+                              value={veg.unit}
+                              onChange={(e) => handleVegChange(veg.id, 'unit', e.target.value)}
+                              disabled={!veg.selected}
+                            >
+                              <option value="kg">kg</option>
+                              <option value="g">g</option>
+                              <option value="nos">nos</option>
+                              <option value="ltr">ltr</option>
+                            </select>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : formData.demandCategory === 'Fruit' ? (
+                  <table className="itemsTable">
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>Item Name</th>
+                        <th style={{ textAlign: 'right' }}>Quantity</th>
+                        <th style={{ textAlign: 'right' }}>Unit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {fruitData.map(fruit => (
+                        <tr key={fruit.id} className={fruit.selected ? "rowSelected" : ""}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              className="formCheckbox"
+                              checked={fruit.selected}
+                              onChange={(e) => handleFruitChange(fruit.id, 'selected', e.target.checked)}
+                            />
+                          </td>
+                          <td className="itemName">{fruit.name}</td>
+                          <td style={{ textAlign: 'right' }}>
+                            <input
+                              type="number"
+                              className={`formInput ${fruit.selected ? 'reqInput' : ''}`}
+                              style={{ width: '100px', padding: '0.5rem', display: 'inline-block' }}
+                              value={fruit.quantityDemand}
+                              onChange={(e) => handleFruitChange(fruit.id, 'quantityDemand', e.target.value)}
+                              disabled={!fruit.selected}
+                              placeholder="0"
+                              required={fruit.selected}
+                              min="0.01"
+                              step="any"
+                            />
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <select 
+                              className="formInput"
+                              style={{ width: '80px', padding: '0.5rem', display: 'inline-block' }}
+                              value={fruit.unit}
+                              onChange={(e) => handleFruitChange(fruit.id, 'unit', e.target.value)}
+                              disabled={!fruit.selected}
+                            >
+                              <option value="kg">kg</option>
+                              <option value="g">g</option>
+                              <option value="nos">nos</option>
+                              <option value="ltr">ltr</option>
+                            </select>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <table className="itemsTable">
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>Item Name</th>
+                        <th style={{ textAlign: 'right' }}>Quantity</th>
+                        <th style={{ textAlign: 'right' }}>Unit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className={singleItemData.selected ? "rowSelected" : ""}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            className="formCheckbox"
+                            checked={singleItemData.selected}
+                            onChange={(e) => setSingleItemData(prev => ({ ...prev, selected: e.target.checked }))}
+                          />
+                        </td>
+                        <td className="itemName">{formData.demandCategory}</td>
+                        <td style={{ textAlign: 'right' }}>
+                          <input
+                            type="number"
+                            className={`formInput ${singleItemData.selected ? 'reqInput' : ''}`}
+                            style={{ width: '100px', padding: '0.5rem', display: 'inline-block' }}
+                            value={singleItemData.quantityDemand}
+                            onChange={(e) => setSingleItemData(prev => ({ ...prev, quantityDemand: e.target.value }))}
+                            disabled={!singleItemData.selected}
+                            placeholder="0"
+                            required={singleItemData.selected}
+                            min="0.01"
+                            step="any"
+                          />
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <select 
+                            className="formInput"
+                            style={{ width: '80px', padding: '0.5rem', display: 'inline-block' }}
+                            value={singleItemData.unit}
+                            onChange={(e) => setSingleItemData(prev => ({ ...prev, unit: e.target.value }))}
+                            disabled={!singleItemData.selected}
+                          >
+                            <option value="kg">kg</option>
+                            <option value="g">g</option>
+                            <option value="nos">nos</option>
+                            <option value="ltr">ltr</option>
+                          </select>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Scheduling */}
 
           <div className="formSection">
@@ -390,7 +565,58 @@ const DelSupForm = ({ navigate }) => {
               value={formData.note}
               onChange={handleChange}
               rows={3}
+              style={{ marginBottom: '1.5rem' }}
             ></textarea>
+
+            <div className="formGrid">
+              <div className="formGroup">
+                <label className="formLabel">Additional Note 1</label>
+                <input
+                  type="text"
+                  name="note1"
+                  className="formInput"
+                  placeholder="Note 1..."
+                  value={formData.note1}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div className="formGroup">
+                <label className="formLabel">Additional Note 2</label>
+                <input
+                  type="text"
+                  name="note2"
+                  className="formInput"
+                  placeholder="Note 2..."
+                  value={formData.note2}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Additional Note 3</label>
+                <input
+                  type="text"
+                  name="note3"
+                  className="formInput"
+                  placeholder="Note 3..."
+                  value={formData.note3}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Additional Note 4</label>
+                <input
+                  type="text"
+                  name="note4"
+                  className="formInput"
+                  placeholder="Note 4..."
+                  value={formData.note4}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
 
           </div>
 
